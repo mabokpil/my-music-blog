@@ -1,19 +1,19 @@
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://my-music-blog-dwdj.onrender.com";
 
 let currentGenre = "k-pop";
-let currentSort  = "popular";
+let currentSort = "popular";
 let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-let memos     = JSON.parse(localStorage.getItem("memos")     || "[]");
+let memos = JSON.parse(localStorage.getItem("memos") || "[]");
 
 const playlistGrid = document.getElementById("playlistGrid");
-const spinner      = document.getElementById("spinner");
-const errorMsg     = document.getElementById("errorMsg");
-const searchInput  = document.getElementById("searchInput");
-const themeBtn     = document.getElementById("themeBtn");
+const spinner = document.getElementById("spinner");
+const errorMsg = document.getElementById("errorMsg");
+const searchInput = document.getElementById("searchInput");
+const themeBtn = document.getElementById("themeBtn");
 const modalOverlay = document.getElementById("modalOverlay");
-const modalClose   = document.getElementById("modalClose");
-const memoSaveBtn  = document.getElementById("memoSaveBtn");
-const memoList     = document.getElementById("memoList");
+const modalClose = document.getElementById("modalClose");
+const memoSaveBtn = document.getElementById("memoSaveBtn");
+const memoList = document.getElementById("memoList");
 
 // ══════════════════════════════════════
 // 플레이리스트
@@ -26,7 +26,7 @@ async function loadPlaylists(genre, sort) {
 
   try {
     const url = `${API_BASE}/api/playlists?genre=${encodeURIComponent(genre)}&sort=${sort}`;
-    const res  = await fetch(url);
+    const res = await fetch(url);
     if (!res.ok) throw new Error("서버 오류");
     const data = await res.json();
 
@@ -47,8 +47,9 @@ function renderPlaylists(items) {
   playlistGrid.innerHTML = "";
 
   items.forEach((playlist) => {
-    const imgUrl = playlist.images?.[0]?.url || "https://placehold.co/300x300?text=PLLOG";
-    const isFav  = favorites.includes(playlist.id);
+    const imgUrl =
+      playlist.images?.[0]?.url || "https://placehold.co/300x300?text=PLLOG";
+    const isFav = favorites.includes(playlist.id);
 
     const card = document.createElement("div");
     card.className = "playlist-card";
@@ -83,7 +84,9 @@ function renderPlaylists(items) {
 
 document.querySelectorAll(".sort-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".sort-btn").forEach((b) => b.classList.remove("active"));
+    document
+      .querySelectorAll(".sort-btn")
+      .forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
     currentSort = btn.dataset.sort;
     loadPlaylists(currentGenre, currentSort);
@@ -111,16 +114,19 @@ searchInput.addEventListener("input", () => {
 async function openModal(playlist) {
   document.getElementById("modalImg").src = playlist.images?.[0]?.url || "";
   document.getElementById("modalTitle").textContent = playlist.name;
-  document.getElementById("modalSubtitle").textContent = playlist.description || "";
-  document.getElementById("trackList").innerHTML = `<p style="color:var(--text-sub);padding:20px 0;font-size:13px">로딩 중...</p>`;
+  document.getElementById("modalSubtitle").textContent =
+    playlist.description || "";
+  document.getElementById("trackList").innerHTML =
+    `<p style="color:var(--text-sub);padding:20px 0;font-size:13px">로딩 중...</p>`;
   modalOverlay.classList.add("open");
 
   try {
-    const res  = await fetch(`${API_BASE}/api/playlists/${playlist.id}/tracks`);
+    const res = await fetch(`${API_BASE}/api/playlists/${playlist.id}/tracks`);
     const data = await res.json();
     renderTracks(data.items || []);
   } catch {
-    document.getElementById("trackList").innerHTML = `<p style="color:var(--text-sub);font-size:13px">트랙을 불러오지 못했어요.</p>`;
+    document.getElementById("trackList").innerHTML =
+      `<p style="color:var(--text-sub);font-size:13px">트랙을 불러오지 못했어요.</p>`;
   }
 }
 
@@ -178,8 +184,13 @@ function closeModal() {
 
 function toggleFavorite(id, btn) {
   const idx = favorites.indexOf(id);
-  if (idx === -1) { favorites.push(id); btn.textContent = "❤️"; }
-  else { favorites.splice(idx, 1); btn.textContent = "🤍"; }
+  if (idx === -1) {
+    favorites.push(id);
+    btn.textContent = "❤️";
+  } else {
+    favorites.splice(idx, 1);
+    btn.textContent = "🤍";
+  }
   localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
@@ -188,7 +199,7 @@ function toggleFavorite(id, btn) {
 // ══════════════════════════════════════
 
 function saveMemo() {
-  const title   = document.getElementById("memoTitle").value.trim();
+  const title = document.getElementById("memoTitle").value.trim();
   const content = document.getElementById("memoContent").value.trim();
   if (!title && !content) return;
 
@@ -225,7 +236,9 @@ function renderMemos() {
       <div class="memo-item-content">${memo.content}</div>
       <div class="memo-item-date">${memo.date}</div>
     `;
-    div.querySelector(".memo-delete-btn").addEventListener("click", () => deleteMemo(memo.id));
+    div
+      .querySelector(".memo-delete-btn")
+      .addEventListener("click", () => deleteMemo(memo.id));
     memoList.appendChild(div);
   });
 }
@@ -254,7 +267,9 @@ themeBtn.addEventListener("click", () => {
 
 document.querySelectorAll(".genre-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".genre-btn").forEach((b) => b.classList.remove("active"));
+    document
+      .querySelectorAll(".genre-btn")
+      .forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
     currentGenre = btn.dataset.genre;
     searchInput.value = "";
