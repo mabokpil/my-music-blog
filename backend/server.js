@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.YOUTUBE_API_KEY;
 
-app.use(cors());
+app.use(cors({ origin: "https://pllog.netlify.app" }));
 app.use(express.json());
 app.use((req, res, next) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
