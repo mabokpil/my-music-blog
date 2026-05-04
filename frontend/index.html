@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PLLOG</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <span class="logo">PLLOG</span>
+            <button class="theme-btn" id="themeBtn">🌙</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <aside class="sidebar">
+
+            <section class="sidebar-section">
+                <p class="sidebar-label">GENRE</p>
+                <div class="genre-list">
+                    <button class="genre-btn active" data-genre="k-pop">K-POP</button>
+                    <button class="genre-btn" data-genre="k-indie">K-인디</button>
+                    <button class="genre-btn" data-genre="hip-hop korean">힙합</button>
+                    <button class="genre-btn" data-genre="ballad korean">발라드</button>
+                    <button class="genre-btn" data-genre="lofi">Lo-fi</button>
+                </div>
+            </section>
+
+            <section class="sidebar-section">
+                <p class="sidebar-label">MEMO</p>
+                <div class="memo-form">
+                    <input type="text" id="memoTitle" placeholder="제목" class="memo-input" />
+                    <textarea id="memoContent" placeholder="내용..." class="memo-textarea"></textarea>
+                    <button class="memo-save-btn" id="memoSaveBtn">저장</button>
+                </div>
+                <div class="memo-list" id="memoList"></div>
+            </section>
+
+        </aside>
+
+        <main class="main">
+
+            <div class="top-bar">
+                <input type="text" id="searchInput" placeholder="플레이리스트 검색..." class="search-input" />
+                <div class="sort-tabs">
+                    <button class="sort-btn active" data-sort="popular">🔥 인기순</button>
+                    <button class="sort-btn" data-sort="hype">⚡ 실시간</button>
+                    <button class="sort-btn" data-sort="viewCount">👁 조회수</button>
+                </div>
+            </div>
+
+            <div class="spinner" id="spinner">
+                <div class="spinner-ring"></div>
+            </div>
+
+            <div class="error-msg" id="errorMsg" style="display:none">
+                ⚠️ 불러오지 못했어요. 잠시 후 다시 시도해 주세요.
+            </div>
+
+            <div class="playlist-grid" id="playlistGrid"></div>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-header">
+                <img src="" alt="" class="modal-img" id="modalImg" />
+                <div class="modal-header-info">
+                    <h3 class="modal-title" id="modalTitle"></h3>
+                    <p class="modal-subtitle" id="modalSubtitle"></p>
+                </div>
+            </div>
+            <div class="track-list" id="trackList"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
